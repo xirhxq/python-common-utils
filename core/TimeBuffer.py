@@ -2,8 +2,9 @@
 
 from collections import deque
 
+
 class TimeBuffer:
-    def __init__(self, name='Buffer', max_age=0.15, time_func=None):
+    def __init__(self, name="Buffer", max_age=0.15, time_func=None):
         self.buffer = deque()
         self.name = name
         self.max_age = max_age
@@ -12,6 +13,7 @@ class TimeBuffer:
     @staticmethod
     def default_time():
         import time
+
         return time.time()
 
     @property
