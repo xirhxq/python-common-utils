@@ -3,4 +3,4 @@ WORKDIR /app
 RUN apt-get update && \
     apt-get install -y python3 python3-pip && \
     pip3 install --upgrade pip
-CMD ["python3", "-m", "unittest", "discover", "-v", "test"]
+CMD ["python3", "-m", "unittest", "discover", "-v", "tests"]
