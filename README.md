@@ -1,15 +1,17 @@
 # python-common-utils
 
-`python-common-utils` is a utility library for common Python functionalities, including control algorithms (such as a PID controller). This library aims to assist developers in efficiently handling general-purpose programming tasks.
+`python-common-utils` is a utility library for common Python functionalities, including control algorithms (such as a PID controller) and data buffering (such as `TimeBuffer` for time-based message caching). This library aims to assist developers in efficiently handling general-purpose programming tasks.
 
 ## Directory Structure
 
 ```
 python-common-utils/
 ├── core/                 # Source code directory
-│   └── PID.py            # PID controller implementation
+│   ├── PID.py            # PID controller implementation
+│   └── TimeBuffer.py     # Time-based message buffer
 ├── test/                 # Test files directory
-│   └── test_pid.py       # Unit tests for the PID controller
+│   ├── test_pid.py       # Unit tests for the PID controller
+│   └── test_time_buffer.py # Unit tests for the TimeBuffer
 ├── docker/               # Docker-related scripts
 │   ├── Dockerfile        # Dockerfile for containerized testing
 │   ├── build_docker.sh   # Script to build Docker container
@@ -19,7 +21,7 @@ python-common-utils/
 
 ## Usage
 
-Below is an example of how to use the PID controller module in `core/`.
+Below are examples of how to use the PID controller and the TimeBuffer modules in `core/`.
 
 ### Using the PID Controller
 
@@ -31,6 +33,21 @@ pid = PID(kp=1.0, ki=0.1, kd=0.05, timeFunc=time.time)
 output = pid.compute(1.5)
 print("PID output:", output)
 ```
+
+### Using the TimeBuffer
+
+```python
+import time
+from core.TimeBuffer import TimeBuffer
+
+buffer = TimeBuffer(name='ExampleBuffer', max_age=0.15, time_func=time.time)
+buffer.add_message("Sample message")
+time.sleep(0.2)
+message = buffer.get_message()
+print("Retrieved message:", message)
+```
+
+The `TimeBuffer` stores messages and retrieves the most recent one within the specified `max_age`. If no message is within the age limit, `None` is returned.
 
 ## Testing
 
