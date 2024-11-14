@@ -1,57 +1,29 @@
 # python-common-utils
 
-`python-common-utils` is a utility library for common Python functionalities, including control algorithms (such as a PID controller) and data buffering (such as `TimeBuffer` for time-based message caching). This library aims to assist developers in efficiently handling general-purpose programming tasks.
+`python-common-utils` is a utility library designed to provide common Python functionalities to help developers with general-purpose programming tasks. It includes a variety of modules, such as control algorithms and data buffering utilities, to assist with common programming needs.
+
+## Features
+
+This library offers the following functionalities:
+
+- **Simple PID Controller Implementation**: Includes the **PID** controller for system control and feedback loops.
+- **Time-based Data Buffering**: Provides the **TimeBuffer** for storing and retrieving messages based on time constraints.
 
 ## Directory Structure
 
-```
-python-common-utils/
-├── core/                 # Source code directory
-│   ├── PID.py            # PID controller implementation
-│   └── TimeBuffer.py     # Time-based message buffer
-├── test/                 # Test files directory
-│   ├── test_pid.py       # Unit tests for the PID controller
-│   └── test_time_buffer.py # Unit tests for the TimeBuffer
-├── docker/               # Docker-related scripts
-│   ├── Dockerfile        # Dockerfile for containerized testing
-│   ├── build_docker.sh   # Script to build Docker container
-│   └── run_docker.sh     # Script to run tests in Docker container
-└── README.md             # Library documentation
-```
+- `core/`: Contains the main source code, including the PID controller and TimeBuffer utilities.
+- `examples/`: Provides example usage scripts to demonstrate how to use the modules in `core/`. These serve as references to understand the intended functionality.
+- `tests/`: Contains unit tests to verify the correctness of the modules in `core/`. The tests ensure expected behavior.
+- `docker/`: Includes Docker-related scripts for building and running tests in an isolated environment.
+- `README.md`: Documentation that outlines the library's purpose, structure, and functionality.
 
 ## Usage
 
-Below are examples of how to use the PID controller and the TimeBuffer modules in `core/`.
-
-### Using the PID Controller
-
-```python
-import time
-from core.PID import PID
-
-pid = PID(kp=1.0, ki=0.1, kd=0.05, timeFunc=time.time)
-output = pid.compute(1.5)
-print("PID output:", output)
-```
-
-### Using the TimeBuffer
-
-```python
-import time
-from core.TimeBuffer import TimeBuffer
-
-buffer = TimeBuffer(name='ExampleBuffer', max_age=0.15, time_func=time.time)
-buffer.add_message("Sample message")
-time.sleep(0.2)
-message = buffer.get_message()
-print("Retrieved message:", message)
-```
-
-The `TimeBuffer` stores messages and retrieves the most recent one within the specified `max_age`. If no message is within the age limit, `None` is returned.
+The primary purpose of this library is to provide examples in the `examples/` directory, which demonstrate how to use the modules in `core/`. You can refer to these examples as guides for implementing the functionality in your own projects.
 
 ## Testing
 
-To set up and run the tests in a Docker container:
+To set up and run tests, including example files, within a Docker container:
 
 1. Ensure the scripts are executable:
    ```bash
@@ -68,11 +40,11 @@ To set up and run the tests in a Docker container:
    ./docker/run_docker.sh
    ```
 
-The `run_docker.sh` script will automatically execute all unit tests within the container.
+The `run_docker.sh` script will execute all unit tests, including examples from the `examples/` directory.
 
 ## Contributing
 
-Contributions are welcome! Please ensure your code passes all tests before submitting a pull request (PR).
+Contributions are welcome! Please ensure that your code passes all tests before submitting a pull request (PR).
 
 ## License
 
