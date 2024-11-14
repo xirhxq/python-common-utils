@@ -1,0 +1,6 @@
+FROM ros:noetic
+WORKDIR /app
+RUN apt-get update && \
+    apt-get install -y python3 python3-pip && \
+    pip3 install --upgrade pip
+CMD ["python3", "-m", "unittest", "discover", "-v", "test"]
