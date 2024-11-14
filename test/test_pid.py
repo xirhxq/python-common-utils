@@ -46,29 +46,31 @@ class TestPIDSystemTime(unittest.TestCase):
 
 class TestPIDROS(unittest.TestCase):
 
+    @classmethod
+    def setUpClass(cls):
+        cls.roscore_process = subprocess.Popen(['roscore'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        time.sleep(5)
+
+        if not rospy.core.is_initialized():
+            try:
+                rospy.init_node('pid_test_ros', anonymous=True)
+            except rospy.exceptions.ROSInitException as e:
+                logging.error(f"Failed to initialize ROS node: {e}")
+                raise
+
+    @classmethod
+    def tearDownClass(cls):
+        rospy.signal_shutdown("Shutting down test node")
+        cls.roscore_process.terminate()
+        cls.roscore_process.wait()
+        if cls.roscore_process.stdout:
+            cls.roscore_process.stdout.close()
+        if cls.roscore_process.stderr:
+            cls.roscore_process.stderr.close()
+
     def setUp(self):
-        self.roscore_process = subprocess.Popen(['roscore'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        time.sleep(2)
-
-        try:
-            rospy.init_node('pid_test_ros', anonymous=True)
-        except rospy.exceptions.ROSInitException as e:
-            logging.error(f"Failed to initialize ROS node: {e}")
-            raise
-
         self.pid = PID(kp=1.0, ki=0.1, kd=0.01, timeFunc=rospy.get_time, intMax=100.0, intMin=-100.0)
-        logging.info("Setup: PID controller initialized with kp=1.0, ki=0.1, kd=0.01, intMax=100.0, intMin=-100.0")
-    
-    def tearDown(self):
-        self.roscore_process.terminate()
-        self.roscore_process.wait()
-        if self.roscore_process.stdout:
-            self.roscore_process.stdout.close()
-        if self.roscore_process.stderr:
-            self.roscore_process.stderr.close()
-
-        logging.info("Tear down: Stopped roscore process and resetting PID controller")
-        self.pid.clearIntResult()
+        logging.info("Setup: PID controller initialized with ROS time")
 
     def test_initialization(self):
         self.assertEqual(self.pid.kp, 1.0)
