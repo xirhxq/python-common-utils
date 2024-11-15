@@ -1,4 +1,4 @@
-# examples/example_time_buffer_ros.py
+# examples/noetic/example_time_buffer_ros.py
 
 import rospy
 from core.TimeBuffer import TimeBuffer
