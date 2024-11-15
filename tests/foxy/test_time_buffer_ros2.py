@@ -15,7 +15,9 @@ class TestTimeBufferROS2(unittest.TestCase):
     def setUpClass(cls):
         rclpy.init()
         cls.node = Node("time_buffer_test_ros2")
-        rclpy.logging.set_logger_level("time_buffer_test_ros2", rclpy.logging.LoggingSeverity.FATAL)
+        rclpy.logging.set_logger_level(
+            "time_buffer_test_ros2", rclpy.logging.LoggingSeverity.FATAL
+        )
 
     @classmethod
     def tearDownClass(cls):
@@ -25,8 +27,8 @@ class TestTimeBufferROS2(unittest.TestCase):
     def setUp(self):
         self._original_stdout = sys.stdout
         self._original_stderr = sys.stderr
-        sys.stdout = open(os.devnull, 'w')
-        sys.stderr = open(os.devnull, 'w')
+        sys.stdout = open(os.devnull, "w")
+        sys.stderr = open(os.devnull, "w")
         self.buffer = TimeBuffer(
             name="TestBufferROS2",
             max_age=0.15,

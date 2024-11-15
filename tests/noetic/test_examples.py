@@ -17,7 +17,6 @@ EXAMPLES = glob.glob(os.path.join(EXAMPLES_DIR, "example_*.py"))
 class TestExamplesNoetic(unittest.TestCase):
 
     def run_example(self, example_module, start_roscore=False):
-        """Runs a given example module and checks for errors."""
         try:
             if start_roscore:
                 roscore_process = subprocess.Popen(

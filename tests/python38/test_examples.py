@@ -16,7 +16,6 @@ EXAMPLES = glob.glob(os.path.join(EXAMPLES_DIR, "example_*.py"))
 class TestExamplesPython(unittest.TestCase):
 
     def run_example(self, example_module):
-        """Runs a given example module and checks for errors."""
         try:
             result = subprocess.run(
                 [sys.executable, "-m", example_module], capture_output=True, text=True

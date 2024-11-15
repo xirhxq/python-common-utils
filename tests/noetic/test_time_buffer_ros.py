@@ -20,7 +20,9 @@ class TestTimeBufferROS(unittest.TestCase):
 
         if not rospy.core.is_initialized():
             try:
-                rospy.init_node("time_buffer_test_ros", anonymous=True, log_level=rospy.FATAL)
+                rospy.init_node(
+                    "time_buffer_test_ros", anonymous=True, log_level=rospy.FATAL
+                )
             except rospy.exceptions.ROSInitException as e:
                 raise
 
@@ -37,8 +39,8 @@ class TestTimeBufferROS(unittest.TestCase):
     def setUp(self):
         self._original_stdout = sys.stdout
         self._original_stderr = sys.stderr
-        sys.stdout = open(os.devnull, 'w')
-        sys.stderr = open(os.devnull, 'w')
+        sys.stdout = open(os.devnull, "w")
+        sys.stderr = open(os.devnull, "w")
         self.buffer = TimeBuffer(
             name="TestBufferROS", max_age=0.15, time_func=rospy.get_time
         )

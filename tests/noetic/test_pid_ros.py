@@ -38,8 +38,8 @@ class TestPIDROS(unittest.TestCase):
     def setUp(self):
         self._original_stdout = sys.stdout
         self._original_stderr = sys.stderr
-        sys.stdout = open(os.devnull, 'w')
-        sys.stderr = open(os.devnull, 'w')
+        sys.stdout = open(os.devnull, "w")
+        sys.stderr = open(os.devnull, "w")
         self.pid = PID(
             kp=1.0,
             ki=0.1,

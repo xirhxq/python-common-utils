@@ -12,8 +12,8 @@ class TestTimeBufferSystemTime(unittest.TestCase):
     def setUp(self):
         self._original_stdout = sys.stdout
         self._original_stderr = sys.stderr
-        sys.stdout = open(os.devnull, 'w')
-        sys.stderr = open(os.devnull, 'w')
+        sys.stdout = open(os.devnull, "w")
+        sys.stderr = open(os.devnull, "w")
         self.buffer = TimeBuffer(name="TestBuffer", max_age=0.15, time_func=time.time)
 
     def tearDown(self):
