@@ -1,6 +1,6 @@
 # python-common-utils
 
-`python-common-utils` is a utility library designed to provide common Python functionalities to help developers with general-purpose programming tasks. It includes a variety of modules, such as control algorithms and data buffering utilities, to assist with common programming needs.
+`python-common-utils` is a utility library designed to support various engineering and experimental tasks. Each functionality is implemented as a separate, object-oriented module, making it easy to integrate into different projects. This library is ROS-agnostic, meaning it can be used both within a ROS environment and independently of ROS.
 
 ## Features
 
@@ -20,6 +20,10 @@ This library offers the following functionalities:
 ## Usage
 
 The primary purpose of this library is to provide examples in the `examples/` directory, which demonstrate how to use the modules in `core/`. You can refer to these examples as guides for implementing the functionality in your own projects.
+
+### ROS Compatibility
+
+`python-common-utils` is designed to be ROS-agnostic. This means you can use it in a ROS environment or in any other Python project without depending on ROS. Whether you are working on a robotics project with ROS or a standalone application, this library can be seamlessly integrated into your workflow.
 
 ## Testing
 
