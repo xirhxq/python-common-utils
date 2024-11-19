@@ -25,7 +25,7 @@ class TestPIDSimulatedTime(unittest.TestCase):
 
     def setUp(self):
         logging.getLogger().setLevel(logging.CRITICAL)
-        self.simulated_time = SimulatedTime()  # Initialize simulated time
+        self.simulated_time = SimulatedTime()
         self.pid = PID(
             kp=1.0, ki=0.1, kd=0.01, timeFunc=self.simulated_time.get_time, intMax=100.0, intMin=-100.0
         )
@@ -46,7 +46,7 @@ class TestPIDSimulatedTime(unittest.TestCase):
 
     def test_integral_clamping(self):
         for _ in range(10):
-            self.simulated_time.advance_time(0.1)  # Advance simulated time by 0.1 seconds
+            self.simulated_time.advance_time(0.1)
             self.pid.compute(1000.0)
         self.assertEqual(self.pid._PID__errIntegral, self.pid._PID__intMax)
 
