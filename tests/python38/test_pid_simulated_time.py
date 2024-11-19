@@ -1,34 +1,36 @@
-# tests/python38/test_pid_system_time.py
+# tests/python38/test_pid_simulated_time.py
 
-import time
 import unittest
 import logging
-import sys
-import os
 from core.PID import PID
+
 
 logging.basicConfig(
     level=logging.CRITICAL, format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
 
-class TestPIDSystemTime(unittest.TestCase):
+class SimulatedTime:
+    def __init__(self, start_time=0.0):
+        self.time = start_time
+
+    def get_time(self):
+        return self.time
+
+    def advance_time(self, delta):
+        self.time += delta
+
+
+class TestPIDSimulatedTime(unittest.TestCase):
 
     def setUp(self):
         logging.getLogger().setLevel(logging.CRITICAL)
-        self._original_stdout = sys.stdout
-        self._original_stderr = sys.stderr
-        sys.stdout = open(os.devnull, "w")
-        sys.stderr = open(os.devnull, "w")
+        self.simulated_time = SimulatedTime()  # Initialize simulated time
         self.pid = PID(
-            kp=1.0, ki=0.1, kd=0.01, timeFunc=time.time, intMax=100.0, intMin=-100.0
+            kp=1.0, ki=0.1, kd=0.01, timeFunc=self.simulated_time.get_time, intMax=100.0, intMin=-100.0
         )
 
     def tearDown(self):
-        sys.stdout.close()
-        sys.stderr.close()
-        sys.stdout = self._original_stdout
-        sys.stderr = self._original_stderr
         self.pid.clearIntResult()
 
     def test_initialization(self):
@@ -44,8 +46,8 @@ class TestPIDSystemTime(unittest.TestCase):
 
     def test_integral_clamping(self):
         for _ in range(10):
+            self.simulated_time.advance_time(0.1)  # Advance simulated time by 0.1 seconds
             self.pid.compute(1000.0)
-            time.sleep(0.1)
         self.assertEqual(self.pid._PID__errIntegral, self.pid._PID__intMax)
 
     def test_derivative_computation(self):
@@ -53,7 +55,7 @@ class TestPIDSystemTime(unittest.TestCase):
         self.assertIsInstance(result, float)
 
     def test_reset_integral(self):
-        time.sleep(0.1)
+        self.simulated_time.advance_time(1.0)
         self.pid.compute(500.0)
         self.pid.clearIntResult()
         self.assertEqual(self.pid._PID__errIntegral, 0.0)
