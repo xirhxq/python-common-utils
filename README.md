@@ -34,13 +34,13 @@ This library is **ROS-agnostic**, meaning you can use it in ROS or ROS 2 environ
 
 ### PID Controller Example
 
-In a ROS 2 environment, you can run the `examples/foxy/example_pid_ros2.py` script to see the PID controller in action:
+In a standalone Python environment, you can run the `examples/python38/example_pid_simulated_time.py` script to see the PID controller in action with simulated time:
 
 ```bash
-python3 -m examples.foxy.example_pid_ros2
+python3 -m examples.python38.example_pid_simulated_time
 ```
 
-This example demonstrates how to set up and use the PID controller for system control.
+This example demonstrates how to set up and use the PID controller with simulated time.
 
 ### TimeBuffer Example
 
