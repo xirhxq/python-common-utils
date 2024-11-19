@@ -13,24 +13,18 @@ EXAMPLES_DIR = os.path.abspath(
 EXAMPLES = glob.glob(os.path.join(EXAMPLES_DIR, "example_*.py"))
 
 
-class TestExamplesPython(unittest.TestCase):
-
-    def run_example(self, example_module):
+def generate_test(example_path):
+    def test(self):
+        example_module = example_path_to_module(example_path, "examples.python38")
         try:
             result = subprocess.run(
                 [sys.executable, "-m", example_module], capture_output=True, text=True
             )
             result.check_returncode()
-            return True
         except subprocess.CalledProcessError as e:
-            print(f"Error running {example_module}: {e.stderr}")
-            return False
+            self.fail(f"Error running {example_module}: {e.stderr}")
 
-    def test_examples(self):
-        for example_path in EXAMPLES:
-            example_module = example_path_to_module(example_path, "examples.python38")
-            with self.subTest(example=example_module):
-                self.assertTrue(self.run_example(example_module))
+    return test
 
 
 def example_path_to_module(example_path, base_package):
@@ -38,6 +32,16 @@ def example_path_to_module(example_path, base_package):
     module_path = os.path.splitext(relative_path)[0].replace(os.path.sep, ".")
     return f"{base_package}.{module_path.split('.', 1)[-1]}"
 
+
+class TestExamplesPython(unittest.TestCase):
+    pass
+
+
+for example_path in EXAMPLES:
+    example_name = os.path.splitext(os.path.basename(example_path))[0]
+    test_name = f"test_{example_name}"
+    test_case = generate_test(example_path)
+    setattr(TestExamplesPython, test_name, test_case)
 
 if __name__ == "__main__":
     unittest.main()
