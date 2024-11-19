@@ -10,7 +10,12 @@ class TestPIDBase:
         def setUp(self):
             self.time_func = self.get_time_func()
             self.pid = PID(
-                kp=1.0, ki=0.1, kd=0.01, timeFunc=self.time_func, intMax=100.0, intMin=-100.0
+                kp=1.0,
+                ki=0.1,
+                kd=0.01,
+                timeFunc=self.time_func,
+                intMax=100.0,
+                intMin=-100.0,
             )
             self.reset_time()
 
