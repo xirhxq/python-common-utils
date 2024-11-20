@@ -1,6 +1,20 @@
 #!/bin/bash
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-LIB_PREFIX="python-common-utils-ros"
-docker run -it --rm -v "$SCRIPT_DIR/..":/app "$LIB_PREFIX-python-test"
-docker run -it --rm -v "$SCRIPT_DIR/..":/app "$LIB_PREFIX-noetic-test"
-docker run -it --rm -v "$SCRIPT_DIR/..":/app "$LIB_PREFIX-foxy-test"
+IMAGE_PREFIX_LOCAL="python-common-utils"
+IMAGE_PREFIX_REMOTE="xirhxq/python-common-utils"
+IMAGE_TAGS=("python38" "noetic" "foxy")
+
+USE_ONLINE=false
+
+if [[ "$1" == "--online" ]]; then
+  USE_ONLINE=true
+fi
+
+for TAG in "${IMAGE_TAGS[@]}"; do
+  if $USE_ONLINE; then
+    IMAGE="${IMAGE_PREFIX_REMOTE}:${TAG}"
+  else
+    IMAGE="${IMAGE_PREFIX_LOCAL}:${TAG}"
+  fi
+  docker run -it --rm -v "$SCRIPT_DIR/..":/app "$IMAGE"
+done
