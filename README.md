@@ -63,17 +63,23 @@ To run tests for the library, including example scripts, follow these steps:
    chmod +x docker/build_docker.sh docker/run_docker.sh
    ```
 
-2. Build the Docker image:
-   ```bash
-   ./docker/build_docker.sh
-   ```
+2. Run tests inside a Docker container:
+   - **Option 1**: Use a pre-built local Docker image:
+     1. Build the Docker image:
+        ```bash
+        ./docker/build_docker.sh
+        ```
+     2. Run the tests:
+        ```bash
+        ./docker/run_docker.sh
+        ```
 
-3. Run tests inside a Docker container:
-   ```bash
-   ./docker/run_docker.sh
-   ```
+   - **Option 2**: Fetch resources or dependencies online (skipping the build step):
+     ```bash
+     ./docker/run_docker.sh --online
+     ```
 
-The `run_docker.sh` script will execute all unit tests and example scripts in the `examples/` directory.
+   The `run_docker.sh` script will execute all unit tests and example scripts in the `examples/` directory. The `--online` parameter allows the script to dynamically fetch resources or dependencies from online sources during the test execution.
 
 ## Contributing
 
