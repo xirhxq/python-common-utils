@@ -16,5 +16,5 @@ for TAG in "${IMAGE_TAGS[@]}"; do
   else
     IMAGE="${IMAGE_PREFIX_LOCAL}:${TAG}"
   fi
-  docker run -it --rm -v "$SCRIPT_DIR/..":/app "$IMAGE"
+  docker run --rm -v "$SCRIPT_DIR/..":/app "$IMAGE"
 done
