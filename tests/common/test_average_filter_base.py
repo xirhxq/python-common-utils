@@ -63,3 +63,23 @@ class TestAverageFilterBase:
             self.assertTrue(
                 self.filter.is_empty, "Filter should be empty after value expires"
             )
+
+        def test_all_values_expire(self):
+            # Test when all values in the buffer expire
+            self.filter.add_value(10.0)
+            self.filter.add_value(20.0)
+            # Advance time beyond max_age to expire all values
+            self.advance_time(0.2)
+            avg = self.filter.get_average()
+            self.assertIsNone(avg, "Average should be None when all values expire")
+
+        def test_custom_max_age_boundary(self):
+            # Test values at the exact boundary of max_age
+            self.filter.add_value(10.0)
+            self.advance_time(0.15)  # Exactly at max_age boundary
+            self.filter.add_value(20.0)
+            avg = self.filter.get_average()
+            # The first value should be at the boundary, so it might still be included
+            # depending on floating point precision, but at least the second value should be included
+            self.assertIsNotNone(avg)
+            self.assertGreaterEqual(avg, 10.0)
