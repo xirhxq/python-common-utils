@@ -8,6 +8,7 @@ This library offers the following functionalities:
 
 - **Simple PID Controller Implementation**: Provides a **PID** controller for system control and feedback loops, suitable for various control engineering applications.
 - **Time-based Data Buffering**: Implements the **TimeBuffer** for storing and retrieving messages based on time constraints, ensuring efficient message handling in time-sensitive systems.
+- **Time-based Average Filtering**: Implements the **AverageFilter** for calculating the average of values within a specified time window, providing a smoothing filter for time-series data.
 
 ## Directory Structure
 
@@ -51,6 +52,16 @@ python3 -m examples.foxy.example_time_buffer_ros2
 ```
 
 This script demonstrates how to use the `TimeBuffer` to manage time-sensitive messages.
+
+### AverageFilter Example
+
+In a standalone Python environment, you can run the `examples/python38/example_average_filter_simulated_time.py` script to see the AverageFilter in action with simulated time:
+
+```bash
+python3 -m examples.python38.example_average_filter_simulated_time
+```
+
+This example demonstrates how to set up and use the AverageFilter with simulated time for smoothing time-series data.
 
 For detailed examples and usage, refer to the `examples/` directory.
 
